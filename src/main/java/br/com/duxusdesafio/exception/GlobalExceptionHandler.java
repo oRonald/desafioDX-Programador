@@ -2,6 +2,7 @@ package br.com.duxusdesafio.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,5 +28,13 @@ public class GlobalExceptionHandler {
         Map<String, String> erros = new HashMap<>();
         erros.put("message", e.getReason());
         return ResponseEntity.status(HttpStatus.valueOf(e.getRawStatusCode())).body(erros);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidLocalDate(HttpMessageNotReadableException e){
+        Map<String, String> erro = new HashMap<>();
+        erro.put("message", "Formato invalido. Use o padrão: YYYY-MM-DD");
+
+        return ResponseEntity.badRequest().body(erro);
     }
 }
