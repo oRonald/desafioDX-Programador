@@ -1,5 +1,6 @@
 package br.com.duxusdesafio.service;
 
+import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Service que possuirá as regras de negócio para o processamento dos dados
@@ -39,8 +41,25 @@ public class ApiService {
      * dentro do período
      */
     public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        return todosOsTimes.stream()
+                // Filtra os times pelo período e se as datas não forem null
+                .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
+                .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))
+
+                // Pega as composições dos times filtrados
+                .flatMap(time -> time.getComposicaoTime().stream())
+
+                // Pega os integrantes destas composições
+                .map(ComposicaoTime::getIntegrante)
+
+                // Conta quantas vezes os integrantes apareceram
+                .collect(Collectors.groupingBy(integrante -> integrante, Collectors.counting()))
+                .entrySet().stream()
+
+                // Retorna o integrante mais frequente
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     /**
