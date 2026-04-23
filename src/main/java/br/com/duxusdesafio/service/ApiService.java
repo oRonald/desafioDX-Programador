@@ -92,8 +92,23 @@ public class ApiService {
      * Vai retornar a função mais recorrente nos times dentro do período
      */
     public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        return todosOsTimes.stream()
+                // Filtra os times pelo período e se as datas forem null
+                .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
+                .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))
+
+                // Pega todas as funções dos integrantes dos times filtrados
+                .flatMap(time -> time.getComposicaoTime().stream())
+                .map(composicaoTime -> composicaoTime.getIntegrante().getFuncao())
+
+                // Conta a frequencia que as funções aparecem
+                .collect(Collectors.groupingBy(funcao -> funcao, Collectors.counting()))
+                .entrySet().stream()
+
+                // Retorna a função mais recorrente
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     /**
