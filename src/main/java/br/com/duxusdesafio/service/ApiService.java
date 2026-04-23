@@ -67,8 +67,25 @@ public class ApiService {
      * OBS: Time é o clube + composição em determinada data
      */
     public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        return todosOsTimes.stream()
+                // Filtra os times pelo período e se as datas forem null
+                .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
+                .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))
+
+                // Conta quantas vezes os times aparecem
+                .collect(Collectors.groupingBy(time -> time, Collectors.counting()))
+                .entrySet().stream()
+
+                // Pega o time mais recorrente
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+
+                // Pega a composição desse time e retorna uma lista com os nomes dos integrantes
+                .map(time -> time.getComposicaoTime()
+                        .stream()
+                        .map(composicaoTime -> composicaoTime.getIntegrante().getNome())
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
     /**
