@@ -115,8 +115,19 @@ public class ApiService {
      * Vai retornar o nome do Clube mais comum dentro do período
      */
     public String clubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        return todosOsTimes.stream()
+                .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
+                .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))
+
+                // Agrupa pelos nomes dos clubes
+                .map(Time::getNomeDoClube)
+                .collect(Collectors.groupingBy(clube -> clube, Collectors.counting()))
+                .entrySet().stream()
+
+                // Retorna o clube mais recorrente
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
 
