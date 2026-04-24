@@ -53,11 +53,6 @@ public class TimeService {
     }
 
     public List<Time> retornaTodosOsTime(){
-        List<Time> times = timeRepository.findAll();
-        if(times.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não existe nenhum time para esta data");
-        }
-
-        return times;
+        return timeRepository.findAll();
     }
 }
