@@ -151,6 +151,18 @@ public class TesteApiService {
         assertEquals(esperado, nomeDosIntegrantesDoTimeMaisRecorrente);
     }
 
+    @Test
+    public void testIntegranteDoTimeMaisRecorrenteComParametrosNulos(){
+        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(data1993, data1994, null));
+        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(null, null, null));
+        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(null, null, new ArrayList<>()));
+
+        Assert.assertFalse(apiService.integrantesDoTimeMaisRecorrente(null, null, todosOsTimes).isEmpty());
+    }
+
 
 
     @DataProvider

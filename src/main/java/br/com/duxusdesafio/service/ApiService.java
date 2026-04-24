@@ -6,6 +6,8 @@ import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,6 +73,10 @@ public class ApiService {
      * OBS: Time é o clube + composição em determinada data
      */
     public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+        if(todosOsTimes == null || todosOsTimes.isEmpty()){
+            return new ArrayList<>();
+        }
+
         return todosOsTimes.stream()
                 // Filtra os times pelo período e se as datas forem null
                 .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
