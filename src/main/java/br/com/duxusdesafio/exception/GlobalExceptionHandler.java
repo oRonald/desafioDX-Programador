@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -33,7 +34,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleInvalidLocalDate(HttpMessageNotReadableException e){
         Map<String, String> erro = new HashMap<>();
-        erro.put("message", "Formato invalido. Use o padrão: YYYY-MM-DD");
+        erro.put("message", "Formato de dado inválido. Por favor, revise os campos");
+
+        return ResponseEntity.badRequest().body(erro);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex){
+        Map<String, String> erro = new HashMap<>();
+        erro.put("message", "Parâmetro " + ex.getName() + " invalido.");
 
         return ResponseEntity.badRequest().body(erro);
     }
