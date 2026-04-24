@@ -6,10 +6,7 @@ import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -153,6 +150,10 @@ public class ApiService {
      * Vai retornar o número (quantidade) de aparições de cada Clube participante no período
      */
     public Map<String, Long> contagemDeClubesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+        if(todosOsTimes == null || todosOsTimes.isEmpty()){
+            return new HashMap<>();
+        }
+
         return todosOsTimes.stream()
                 .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
                 .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))

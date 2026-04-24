@@ -273,6 +273,17 @@ public class TesteApiService {
         assertEquals(esperado, contagemDeClubesNoPeriodo);
     }
 
+    @Test
+    public void testContagemDeClubesNoPeriodoComParametrosNulos(){
+        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        Assert.assertEquals(new HashMap<>(), apiService.contagemDeClubesNoPeriodo(data1993, data1994, null));
+        Assert.assertEquals(new HashMap<>(), apiService.contagemDeClubesNoPeriodo(null, null, new ArrayList<>()));
+
+        Assert.assertFalse(apiService.contagemDeClubesNoPeriodo(data1993, data1994, todosOsTimes).isEmpty());
+        Assert.assertFalse(apiService.contagemDeClubesNoPeriodo(null, null, todosOsTimes).isEmpty());
+    }
 
 
     @DataProvider
