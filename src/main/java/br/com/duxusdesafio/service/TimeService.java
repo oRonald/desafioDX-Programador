@@ -51,4 +51,13 @@ public class TimeService {
         time.setComposicaoTime(composicao);
         return mapper.toResponse(timeRepository.save(time));
     }
+
+    public List<Time> retornaTodosOsTime(){
+        List<Time> times = timeRepository.findAll();
+        if(times.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não existe nenhum time para esta data");
+        }
+
+        return times;
+    }
 }
