@@ -54,4 +54,13 @@ public class TimeController {
         String funcaoRecorrente = apiService.funcaoMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
         return ResponseEntity.ok(new FuncaoRecorrenteResponse(funcaoRecorrente));
     }
+
+    @GetMapping("/clube-recorrente")
+    public ResponseEntity<ClubeRecorrenteResponse> clubeMaisRecorrente(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        String clubeRecorrente = apiService.clubeMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        return ResponseEntity.ok(new ClubeRecorrenteResponse(clubeRecorrente));
+    }
 }
