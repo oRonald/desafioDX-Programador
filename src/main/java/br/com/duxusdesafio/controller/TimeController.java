@@ -1,8 +1,6 @@
 package br.com.duxusdesafio.controller;
 
-import br.com.duxusdesafio.dto.TimeDaDataResponse;
-import br.com.duxusdesafio.dto.TimeRequest;
-import br.com.duxusdesafio.dto.TimeResponse;
+import br.com.duxusdesafio.dto.*;
 import br.com.duxusdesafio.model.Time;
 import br.com.duxusdesafio.service.ApiService;
 import br.com.duxusdesafio.service.TimeService;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/times")
@@ -36,5 +35,14 @@ public class TimeController {
     public ResponseEntity<TimeDaDataResponse> timeDaData(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data){
         Time time = apiService.timeDaData(data, timeService.retornaTodosOsTime());
         return ResponseEntity.ok(new TimeDaDataResponse(time));
+    }
+
+    @GetMapping("/integrantes-recorrentes")
+    public ResponseEntity<IntegranteRecorrentResponse> integrantesMaisRecorrentes(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        List<String> integrantes = apiService.integrantesDoTimeMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        return ResponseEntity.ok(new IntegranteRecorrentResponse(integrantes));
     }
 }
