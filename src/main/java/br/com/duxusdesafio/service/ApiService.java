@@ -41,6 +41,10 @@ public class ApiService {
      * dentro do período
      */
     public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+        if(todosOsTimes == null){
+            return null;
+        }
+
         return todosOsTimes.stream()
                 // Filtra os times pelo período e se as datas não forem null
                 .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))

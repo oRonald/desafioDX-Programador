@@ -105,6 +105,17 @@ public class TesteApiService {
         assertEquals(esperado, integranteRetornado);
     }
 
+    @Test
+    public void testIntegranteMaisUsadoComParametrosNulos(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        Assert.assertNull(apiService.integranteMaisUsado(data1993, data1994, null));
+        Assert.assertNull(apiService.integranteMaisUsado(data1993, data1994, new ArrayList<>()));
+
+        Assert.assertNotNull(apiService.integranteMaisUsado(null, null, todosOsTimes));
+    }
+
 
 
     @DataProvider
