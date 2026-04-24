@@ -5,6 +5,7 @@ import br.com.duxusdesafio.model.Time;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,16 @@ public class TesteApiService {
         Time timeRetornado = apiService.timeDaData(data, todosOsTimes);
 
         assertEquals(esperado, timeRetornado);
+    }
+
+    @Test
+    public void testTimeDaDataComParametrosNulos(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        Assert.assertNull(apiService.timeDaData(data1995, null));
+        Assert.assertNull(apiService.timeDaData(null, todosOsTimes));
+        Assert.assertNull(apiService.timeDaData(null, null));
     }
 
 
