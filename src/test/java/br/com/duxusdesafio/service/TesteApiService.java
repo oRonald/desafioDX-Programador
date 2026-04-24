@@ -190,6 +190,17 @@ public class TesteApiService {
         assertEquals(esperado, funcaoMaisRecorrente);
     }
 
+    @Test
+    public void testFuncaoMaisRecorrenteComParametrosNulos(){
+        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        Assert.assertNull(apiService.funcaoMaisRecorrente(data1993, data1994, null));
+        Assert.assertNull(apiService.funcaoMaisRecorrente(data1993, data1994, new ArrayList<>()));
+
+        Assert.assertNotNull(apiService.funcaoMaisRecorrente(null, null, todosOsTimes));
+    }
+
     @DataProvider
     public static Object[][] testClubeMaisRecorrenteParams() {
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();

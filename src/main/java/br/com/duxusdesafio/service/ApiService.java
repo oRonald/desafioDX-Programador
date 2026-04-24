@@ -102,6 +102,10 @@ public class ApiService {
      * Vai retornar a função mais recorrente nos times dentro do período
      */
     public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+        if(todosOsTimes == null || todosOsTimes.isEmpty()){
+            return null;
+        }
+
         return todosOsTimes.stream()
                 // Filtra os times pelo período e se as datas forem null
                 .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
