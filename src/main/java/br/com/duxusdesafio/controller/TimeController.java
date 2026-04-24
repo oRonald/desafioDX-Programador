@@ -45,4 +45,13 @@ public class TimeController {
         List<String> integrantes = apiService.integrantesDoTimeMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
         return ResponseEntity.ok(new IntegranteRecorrentResponse(integrantes));
     }
+
+    @GetMapping("/funcao-recorrente")
+    public ResponseEntity<FuncaoRecorrenteResponse> funcaoMaisRecorrente(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        String funcaoRecorrente = apiService.funcaoMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        return ResponseEntity.ok(new FuncaoRecorrenteResponse(funcaoRecorrente));
+    }
 }
