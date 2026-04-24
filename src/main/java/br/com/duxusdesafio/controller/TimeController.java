@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/times")
@@ -62,5 +63,14 @@ public class TimeController {
 
         String clubeRecorrente = apiService.clubeMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
         return ResponseEntity.ok(new ClubeRecorrenteResponse(clubeRecorrente));
+    }
+
+    @GetMapping("/contagem-clubes")
+    public ResponseEntity<Map<String, Long>> contagemDeClubesNoPeriodo(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        Map<String, Long> contagemDeClubes = apiService.contagemDeClubesNoPeriodo(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        return ResponseEntity.ok(contagemDeClubes);
     }
 }
