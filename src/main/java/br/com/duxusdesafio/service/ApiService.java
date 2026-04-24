@@ -129,6 +129,10 @@ public class ApiService {
      * Vai retornar o nome do Clube mais comum dentro do período
      */
     public String clubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        if(todosOsTimes == null || todosOsTimes.isEmpty()){
+            return null;
+        }
+
         return todosOsTimes.stream()
                 .filter(time -> dataInicial == null || !time.getData().isBefore(dataInicial))
                 .filter(time -> dataFinal == null || !time.getData().isAfter(dataFinal))

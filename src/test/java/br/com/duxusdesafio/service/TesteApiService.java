@@ -224,6 +224,18 @@ public class TesteApiService {
         assertEquals(esperado, clubeMaisRecorrente);
     }
 
+    @Test
+    public void testClubeMaisRecorrenteComParametrosNulos(){
+        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        Assert.assertNull(apiService.clubeMaisRecorrente(data1993, data1994, null));
+        Assert.assertNull(apiService.clubeMaisRecorrente(data1993, data1994, new ArrayList<>()));
+        Assert.assertNull(apiService.clubeMaisRecorrente(LocalDate.of(2023, 1, 1), null, todosOsTimes));
+
+        Assert.assertNotNull(apiService.clubeMaisRecorrente(null, null, todosOsTimes));
+    }
+
     @DataProvider
     public static Object[][] testContagemDeClubesParams() {
 
