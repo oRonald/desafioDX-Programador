@@ -20,7 +20,7 @@ public class TimeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criarTime(@RequestBody @Valid TimeRequest request){
+    public ResponseEntity<TimeResponse> criarTime(@RequestBody @Valid TimeRequest request){
         TimeResponse response = timeService.criarTime(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
