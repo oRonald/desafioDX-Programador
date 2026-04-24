@@ -314,4 +314,16 @@ public class TesteApiService {
         assertEquals(esperado, contagemPorFuncao);
     }
 
+    @Test
+    public void testContagemPorFuncaoComParametrosNulos(){
+        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        Assert.assertEquals(new HashMap<>(), apiService.contagemPorFuncao(data1993, data1994, null));
+        Assert.assertEquals(new HashMap<>(), apiService.contagemPorFuncao(null, null, new ArrayList<>()));
+
+        Assert.assertNotNull(apiService.contagemPorFuncao(data1993, data1995, todosOsTimes));
+        Assert.assertTrue(apiService.contagemPorFuncao(data1993, data1994, todosOsTimes).isEmpty());
+    }
+
 }

@@ -165,6 +165,10 @@ public class ApiService {
      * Vai retornar o número (quantidade) de Funções dentro do período
      */
     public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+        if(todosOsTimes == null || todosOsTimes.isEmpty()){
+            return new HashMap<>();
+        }
+
         return todosOsTimes.stream()
                 // Filtro para os times nas datas podendo ser null ou  exatamente dentro do período
                 .filter(time -> dataInicial == null || time.getData().isAfter(dataInicial))
