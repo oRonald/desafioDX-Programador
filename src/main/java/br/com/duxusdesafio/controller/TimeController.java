@@ -73,4 +73,13 @@ public class TimeController {
         Map<String, Long> contagemDeClubes = apiService.contagemDeClubesNoPeriodo(dataInicial, dataFinal, timeService.retornaTodosOsTime());
         return ResponseEntity.ok(contagemDeClubes);
     }
+
+    @GetMapping("/contagem-funcao")
+    public ResponseEntity<Map<String, Long>> contagemPorFuncao(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        Map<String, Long> contagemPorFuncao = apiService.contagemPorFuncao(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        return ResponseEntity.ok(contagemPorFuncao);
+    }
 }
