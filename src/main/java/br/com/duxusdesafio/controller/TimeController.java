@@ -1,6 +1,7 @@
 package br.com.duxusdesafio.controller;
 
 import br.com.duxusdesafio.dto.*;
+import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import br.com.duxusdesafio.service.ApiService;
 import br.com.duxusdesafio.service.TimeService;
@@ -35,7 +36,24 @@ public class TimeController {
     @GetMapping("/por-data")
     public ResponseEntity<TimeDaDataResponse> timeDaData(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data){
         Time time = apiService.timeDaData(data, timeService.retornaTodosOsTime());
+        if(time == null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(new TimeDaDataResponse(time));
+    }
+
+    @GetMapping("/integrante-mais-usado")
+    public ResponseEntity<IntegranteResponse> integranteMaisUsado(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
+
+        Integrante integrante = apiService.integranteMaisUsado(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        if(integrante == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(new IntegranteResponse(integrante.getId(), integrante.getNome(), integrante.getFuncao()));
     }
 
     @GetMapping("/integrantes-recorrentes")
@@ -53,6 +71,10 @@ public class TimeController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
 
         String funcaoRecorrente = apiService.funcaoMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        if(funcaoRecorrente == null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(new FuncaoRecorrenteResponse(funcaoRecorrente));
     }
 
@@ -62,6 +84,10 @@ public class TimeController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal){
 
         String clubeRecorrente = apiService.clubeMaisRecorrente(dataInicial, dataFinal, timeService.retornaTodosOsTime());
+        if(clubeRecorrente == null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(new ClubeRecorrenteResponse(clubeRecorrente));
     }
 

@@ -92,7 +92,7 @@ public class ApiService {
                         .stream()
                         .map(composicaoTime -> composicaoTime.getIntegrante().getNome())
                         .collect(Collectors.toList()))
-                .orElse(null);
+                .orElse(new ArrayList<>());
     }
 
     /**
