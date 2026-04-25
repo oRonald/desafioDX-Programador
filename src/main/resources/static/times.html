@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Time</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/times.js" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Criar Time</h2>
+
+        <div>
+            <label>Nome do Time</label>
+            <input type="text" id="nomeTime" placeholder="São Paulo..." required>
+        </div>
+
+        <div>
+            <label>Data do Time</label>
+            <input type="date" id="dataTime" placeholder="2026-04-01" required>
+        </div>
+
+        <h3>Selecione os Integrantes</h3>
+        <div id="listaIntegrantes"></div>
+
+        <button class="btnCriarTimes" onclick="criarTime()">Criar Time</button>
+
+        <button class="btnCriarIntegrantes" onclick="irParaIntegrantes()" >Criar Integrantes</button>
+
+        <p id="mensagem"></p>
+    </div>
+
+</body>
+</html>

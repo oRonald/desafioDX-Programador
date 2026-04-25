@@ -28,3 +28,7 @@ document.getElementById("formIntegrantes").addEventListener("submit", async func
         mensagem.classList.add("mensagem-erro");
     }
 });
+
+function irParaTimes(){
+    window.location.href = "times.html";
+}

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/integrantes")
@@ -23,5 +24,10 @@ public class IntegranteController {
     public ResponseEntity<IntegranteResponse> criarIntegrante(@RequestBody @Valid IntegranteRequest request){
         IntegranteResponse response = integranteService.criarIntegrante(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<IntegranteResponse>> listarIntegrantes(){
+        return ResponseEntity.ok(integranteService.listarIntegrantes());
     }
 }
