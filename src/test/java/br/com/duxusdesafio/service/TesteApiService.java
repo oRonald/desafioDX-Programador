@@ -67,13 +67,32 @@ public class TesteApiService {
     }
 
     @Test
-    public void testTimeDaDataComParametrosNulos(){
+    public void testTimeDaData_deveRetornarNullQuandoTimesForNull(){
+        List<Time> todosOsTimes = null;
+
+        Time resultado = apiService.timeDaData(data1993, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testTimeDaData_deveRetornarNullQuandoTimesForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        Time resultado = apiService.timeDaData(data1993, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testTimeDaData_deveRetornarNullQuandoDataSemTime(){
         DadosParaTesteApiService dados = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dados.getTodosOsTimes();
+        LocalDate dataSemTime = LocalDate.of(2030,1, 1);
 
-        Assert.assertNull(apiService.timeDaData(data1995, null));
-        Assert.assertNull(apiService.timeDaData(null, todosOsTimes));
-        Assert.assertNull(apiService.timeDaData(null, null));
+        Time resultado = apiService.timeDaData(dataSemTime, todosOsTimes);
+
+        Assert.assertNull(resultado);
     }
 
 
@@ -106,14 +125,31 @@ public class TesteApiService {
     }
 
     @Test
-    public void testIntegranteMaisUsadoComParametrosNulos(){
+    public void testIntegranteMaisUsado_deveRetornarNullQuandoTimeForNull(){
+        List<Time> todosOsTimes = null;
+
+        Integrante resultado = apiService.integranteMaisUsado(data1993, data1995, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testIntegranteMaisUsado_deveRetornarNullQuandoTimeForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        Integrante resultado = apiService.integranteMaisUsado(data1993, data1995, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testIntegranteMaisUsado_deveRetornarIntegranteComDatasNull(){
         DadosParaTesteApiService dados = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dados.getTodosOsTimes();
 
-        Assert.assertNull(apiService.integranteMaisUsado(data1993, data1994, null));
-        Assert.assertNull(apiService.integranteMaisUsado(data1993, data1994, new ArrayList<>()));
+        Integrante resultado = apiService.integranteMaisUsado(null, null, todosOsTimes);
 
-        Assert.assertNotNull(apiService.integranteMaisUsado(null, null, todosOsTimes));
+        Assert.assertNotNull(resultado);
     }
 
 
@@ -152,15 +188,31 @@ public class TesteApiService {
     }
 
     @Test
-    public void testIntegranteDoTimeMaisRecorrenteComParametrosNulos(){
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+    public void testIntegranteDoTimeMaisRecorrente_deveRetornarListaVaziaQuandoTimesForNull(){
+        List<Time> todosOsTimes = null;
 
-        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(data1993, data1994, null));
-        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(null, null, null));
-        Assert.assertEquals(new ArrayList<>(), apiService.integrantesDoTimeMaisRecorrente(null, null, new ArrayList<>()));
+        List<String> resultado = apiService.integrantesDoTimeMaisRecorrente(data1993, data1995, todosOsTimes);
 
-        Assert.assertFalse(apiService.integrantesDoTimeMaisRecorrente(null, null, todosOsTimes).isEmpty());
+        Assert.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void testIntegranteDoTimeMaisRecorrente_deveRetornarListaVaziaQuandoTimeForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        List<String> resultado = apiService.integrantesDoTimeMaisRecorrente(data1993, data1995, todosOsTimes);
+
+        Assert.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void testIntegranteDoTimeMaisRecorrente_deveRetornarListaQuandoDatasForNull(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        List<String> resultado = apiService.integrantesDoTimeMaisRecorrente(null, null, todosOsTimes);
+
+        Assert.assertFalse(resultado.isEmpty());
     }
 
 
@@ -191,14 +243,31 @@ public class TesteApiService {
     }
 
     @Test
-    public void testFuncaoMaisRecorrenteComParametrosNulos(){
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+    public void testFuncaoMaisRecorrente_deveRetornarNullQuandoListaForNull(){
+        List<Time> todosOsTimes = null;
 
-        Assert.assertNull(apiService.funcaoMaisRecorrente(data1993, data1994, null));
-        Assert.assertNull(apiService.funcaoMaisRecorrente(data1993, data1994, new ArrayList<>()));
+        String resultado = apiService.funcaoMaisRecorrente(data1993, data1995, todosOsTimes);
 
-        Assert.assertNotNull(apiService.funcaoMaisRecorrente(null, null, todosOsTimes));
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testFuncaoMaisRecorrente_deveRetornarNullQuandoTimesForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        String resultado = apiService.funcaoMaisRecorrente(data1993, data1995, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testFuncaoMaisRecorrente_deveRetornarStringQuandoDatasForNull(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        String resultado = apiService.funcaoMaisRecorrente(null, null, todosOsTimes);
+
+        Assert.assertNotNull(resultado);
     }
 
     @DataProvider
@@ -225,15 +294,31 @@ public class TesteApiService {
     }
 
     @Test
-    public void testClubeMaisRecorrenteComParametrosNulos(){
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+    public void testClubeMaisRecorrente_deveRetornarNullQuandoTimeForNull(){
+        List<Time> todosOsTimes = null;
 
-        Assert.assertNull(apiService.clubeMaisRecorrente(data1993, data1994, null));
-        Assert.assertNull(apiService.clubeMaisRecorrente(data1993, data1994, new ArrayList<>()));
-        Assert.assertNull(apiService.clubeMaisRecorrente(LocalDate.of(2023, 1, 1), null, todosOsTimes));
+        String resultado = apiService.clubeMaisRecorrente(data1993, data1995, todosOsTimes);
 
-        Assert.assertNotNull(apiService.clubeMaisRecorrente(null, null, todosOsTimes));
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testClubeMaisRecorrente_deveRetornarNullQuandoTimeForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        String resultado = apiService.clubeMaisRecorrente(data1993, data1995, todosOsTimes);
+
+        Assert.assertNull(resultado);
+    }
+
+    @Test
+    public void testClubeMaisRecorrente_deveRetornarStringQuandoDatasForNull(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        String resultado = apiService.clubeMaisRecorrente(null, null, todosOsTimes);
+
+        Assert.assertNotNull(resultado);
     }
 
     @DataProvider
@@ -274,15 +359,31 @@ public class TesteApiService {
     }
 
     @Test
-    public void testContagemDeClubesNoPeriodoComParametrosNulos(){
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+    public void testContagemDeClubesNoPeriodo_deveRetornarMapVazioQuandoTimesForNull(){
+        List<Time> todosOsTimes = null;
 
-        Assert.assertEquals(new HashMap<>(), apiService.contagemDeClubesNoPeriodo(data1993, data1994, null));
-        Assert.assertEquals(new HashMap<>(), apiService.contagemDeClubesNoPeriodo(null, null, new ArrayList<>()));
+        Map<String, Long> resultado = apiService.contagemDeClubesNoPeriodo(data1993, data1995, todosOsTimes);
 
-        Assert.assertFalse(apiService.contagemDeClubesNoPeriodo(data1993, data1994, todosOsTimes).isEmpty());
-        Assert.assertFalse(apiService.contagemDeClubesNoPeriodo(null, null, todosOsTimes).isEmpty());
+        Assert.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void testContagemDeClubesNoPeriodo_deveRetornarMapVazioQuandoTimesForVazio(){
+        List<Time> todosOsTimes = new ArrayList<>();
+
+        Map<String, Long> resultado = apiService.contagemDeClubesNoPeriodo(data1993, data1995, todosOsTimes);
+
+        Assert.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void testContagemDeClubesNoPeriodo_deveRetornarMapQuandoDatasForNull(){
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        Map<String, Long> resultado = apiService.contagemDeClubesNoPeriodo(null, null, todosOsTimes);
+
+        Assert.assertFalse(resultado.isEmpty());
     }
 
 
@@ -315,15 +416,19 @@ public class TesteApiService {
     }
 
     @Test
-    public void testContagemPorFuncaoComParametrosNulos(){
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+    public void testContagemPorFuncaoDeveRetornarMapaVazioQuandoTimesForNull(){
+        List<Time> todosOsTimes = null;
 
-        Assert.assertEquals(new HashMap<>(), apiService.contagemPorFuncao(data1993, data1994, null));
-        Assert.assertEquals(new HashMap<>(), apiService.contagemPorFuncao(null, null, new ArrayList<>()));
+        Map<String, Long> resultado = apiService.contagemPorFuncao(data1993, data1994, todosOsTimes);
 
-        Assert.assertNotNull(apiService.contagemPorFuncao(data1993, data1995, todosOsTimes));
-        Assert.assertTrue(apiService.contagemPorFuncao(data1993, data1994, todosOsTimes).isEmpty());
+        Assert.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void testContagemPorFuncaoDeveRetornarMapaVazioQuandoTimesForVazio(){
+        Map<String, Long> resultado = apiService.contagemPorFuncao(data1993, data1994, new ArrayList<>());
+
+        Assert.assertTrue(resultado.isEmpty());
     }
 
 }
